@@ -3,13 +3,19 @@ import logo from './logo.svg';
 import './App.css';
 import Country from './Components/Country/Country';
 import Cart from './Components/Cart/Cart';
+import playerData from './Components/FakeData/faceData.json';
 
 function App() {
 const [ countries, setCountries] = useState([]);
 const [cart, setCart]= useState([]);
+const [player, setPlayer]= useState([]);
+useEffect(() =>{
+  setPlayer(playerData);
+  console.log(playerData);
+}, [])
   
   useEffect(() => {
-    fetch('https://restcountries.eu/rest/v2/all')
+    fetch('https://api.mocki.io/v1/42ed98b8')
     .then(res => res.json())
     .then(data=>setCountries(data))
     .catch(error => console.log(error))
@@ -22,27 +28,14 @@ const [cart, setCart]= useState([]);
 
   return (
     <div className="App">
-      <h2>Countries loaded: {countries.length}</h2>
-      <h4>Country Added: {cart.length}</h4>
+      <h2>Players : {countries.length}</h2>
+      <h4>Players added: {cart.length}</h4>
       <Cart cart={cart}></Cart>
         {
         countries.map(country => <Country country={country} handleAddCountry={handleAddCountry} key={country.alpha3Code}></Country>)
         }
       
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     
     </div>
   );
 }
